@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -47,6 +47,12 @@ export function Step3PropertyInfo({ adData, updateAdData, onNext, onPrev }: Step
     }
   };
 
+  useEffect(() => {
+    if (adData.city !== 'baku') {
+      updateAdData({ district: '', settlement: '' });
+    }
+  }, [adData.city]);
+
   return (
     <div className="max-w-4xl mx-auto">
       <div className="bg-white dark:bg-[#1a1a1a] rounded-xl shadow-lg p-8">
@@ -86,24 +92,41 @@ export function Step3PropertyInfo({ adData, updateAdData, onNext, onPrev }: Step
                   </SelectContent>
                 </Select>
               </div>
-              <div>
-                <Label htmlFor="district">Rayon</Label>
-                <Input
-                  id="district"
-                  value={adData.district || ''}
-                  onChange={(e) => handleInputChange('district', e.target.value)}
-                  placeholder="Rayon"
-                />
-              </div>
-              <div>
-                <Label htmlFor="settlement">Qəsəbə</Label>
-                <Input
-                  id="settlement"
-                  value={adData.settlement || ''}
-                  onChange={(e) => handleInputChange('settlement', e.target.value)}
-                  placeholder="Qəsəbə"
-                />
-              </div>
+              {adData.city === 'baku' && (
+                <>
+                  <div>
+                    <Label htmlFor="district">Rayon</Label>
+                    <Select value={adData.district || ''} onValueChange={(value) => handleInputChange('district', value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Rayon seçin" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="binagadi">Binəqədi rayonu</SelectItem>
+                        <SelectItem value="garadag">Qaradağ rayonu</SelectItem>
+                        <SelectItem value="narimanov">Nərimanov rayonu</SelectItem>
+                        <SelectItem value="nasimi">Nəsimi rayonu</SelectItem>
+                        <SelectItem value="nizami">Nizami rayonu</SelectItem>
+                        <SelectItem value="sabunchu">Sabunçu rayonu</SelectItem>
+                        <SelectItem value="sabail">Səbail rayonu</SelectItem>
+                        <SelectItem value="surakhani">Suraxanı rayonu</SelectItem>
+                        <SelectItem value="pirallahi">Pirallahı rayonu</SelectItem>
+                        <SelectItem value="xatai">Xətai rayonu</SelectItem>
+                        <SelectItem value="khazar">Xəzər rayonu</SelectItem>
+                        <SelectItem value="yasamal">Yasamal rayonu</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label htmlFor="settlement">Qəsəbə</Label>
+                    <Input
+                      id="settlement"
+                      value={adData.settlement || ''}
+                      onChange={(e) => handleInputChange('settlement', e.target.value)}
+                      placeholder="Qəsəbə"
+                    />
+                  </div>
+                </>
+              )}
             </div>
             <div className="mt-4">
               <Label htmlFor="description">Təsvir *</Label>
