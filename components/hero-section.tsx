@@ -5,7 +5,7 @@ export function HeroSection() {
     <div className="relative h-[500px] w-full">
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/modern-office-hero-background.png')" }}
+        style={{ backgroundImage: "url('/hero.jpg')" }}
       >
         <div className="absolute inset-0 bg-black/50" />
       </div>
